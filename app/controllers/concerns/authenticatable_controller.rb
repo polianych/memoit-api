@@ -19,6 +19,11 @@ module AuthenticatableController
     set_token_headers(user_token)
   end
 
+  def render_user(user)
+    @user = user
+    render "users/show", status: :ok, location: @user
+  end
+
   def set_token_headers(user_token)
     response.headers['Authorization'] = user_token.token
     response.headers['Client'] = user_token.client

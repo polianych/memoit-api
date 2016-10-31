@@ -1,12 +1,12 @@
 class SessionsController < ApplicationController
   before_filter :authtenticate_user!, only: [:destroy]
   def create
-    @user = User.find_by(email: params[:user][:email])
+    @user = User.find_by(email: params[:user][:email], provider: 'email')
     if @user && @user.authenticate(params[:user][:password])
       sign_in(@user)
-      render "users/show", status: :created, location: @user
+      render_user(@user)
     else
-      render json: { error: 'Wrong email/password'}, status: :unauthorized
+      render json: { errors: {}, errors_full: ['Invalid email or password'] }, status: :unauthorized
     end
   end
 
