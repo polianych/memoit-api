@@ -7,18 +7,14 @@ class UserToken < ApplicationRecord
   attr_accessor :token
 
   def set_values
-    self.client     ||= self.class.generate_token
     self.expiry     ||= 3.month.from_now
-    self.token        = self.class.generate_token
+    self.client     ||= Uriable.generate_random_token
+    self.token        = Uriable.generate_random_token
     self.token_hash ||= ::BCrypt::Password.create(token)
   end
 
   def valid_token?(token)
     ::BCrypt::Password.new(self.token_hash) == token && expiry > Time.now
-  end
-
-  def self.generate_token
-    SecureRandom.urlsafe_base64(24).tr('lIO0', 'sxyz')
   end
 
   def self.destroy_expired(user)

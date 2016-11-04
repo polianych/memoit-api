@@ -16,7 +16,7 @@ class OauthController < ApplicationController
     if user.save
       sign_in(user) && render_user(user)
     else
-      render json: { errors: user.errors, errors_full: user.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors_fields: user.errors, errors: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 end

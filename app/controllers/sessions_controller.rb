@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
       sign_in(@user)
       render_user(@user)
     else
-      render json: { errors: {}, errors_full: ['Invalid email or password'] }, status: :unauthorized
+      render json: { errors_fields: {}, errors: ['Invalid email or password'] }, status: :unauthorized
     end
   end
 

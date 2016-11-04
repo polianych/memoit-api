@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161025102458) do
+ActiveRecord::Schema.define(version: 20161103135157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "password_resets", force: :cascade do |t|
+    t.string   "uri"
+    t.string   "token_hash"
+    t.datetime "expiry"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uri"], name: "index_password_resets_on_uri", unique: true, using: :btree
+    t.index ["user_id"], name: "index_password_resets_on_user_id", using: :btree
+  end
 
   create_table "user_tokens", force: :cascade do |t|
     t.integer  "user_id"
@@ -22,6 +33,7 @@ ActiveRecord::Schema.define(version: 20161025102458) do
     t.string   "token_hash"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_tokens_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,4 +47,6 @@ ActiveRecord::Schema.define(version: 20161025102458) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "password_resets", "users"
+  add_foreign_key "user_tokens", "users"
 end
