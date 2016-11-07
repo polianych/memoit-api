@@ -6,7 +6,8 @@ class PasswordResetsController < ApplicationController
     return render json: { errors: ["User with this email registred via #{@user.provider.capitalize}."]}, status: 422 if @user.provider != 'email'
     PasswordReset.where(user_id: @user.id).destroy_all
     @password_reset = PasswordReset.create(user: @user)
-    render json: { url: @password_reset.send_password_reset_instructions(params.require(:password_reset_url))}
+    @password_reset.send_password_reset_instructions(params.require(:password_reset_url)) if @password_reset.persisted?
+    render json: {}, status: :ok
   end
 
 
