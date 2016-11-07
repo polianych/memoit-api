@@ -17,7 +17,8 @@ class PasswordReset < ApplicationRecord
   end
 
   def send_password_reset_instructions(url_template)
-    UserMailer.reset_password_inctructions(self, url_template).deliver_later
+    password_reset_url = generate_url(url_template)
+    UserMailer.password_reset_instructions(user.email, password_reset_url).deliver_later
   end
 
   def generate_url(url_template)

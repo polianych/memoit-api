@@ -1,13 +1,1 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  user_id: 1
-  client_id: MyString
-  expiry: 2016-10-25 13:24:58
-  token: MyString
-
-two:
-  user_id: 1
-  client_id: MyString
-  expiry: 2016-10-25 13:24:58
-  token: MyString

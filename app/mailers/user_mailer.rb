@@ -1,8 +1,8 @@
 class UserMailer < ApplicationMailer
   default from: 'no-reply@memoit.net'
 
-  def reset_password_inctructions(reset_password, url_template)
-    @reset_password_url = reset_password.generate_url(url_template)
-    mail(to: reset_password.user.email, subject: 'Password reset request for Memoit')
+  def password_reset_instructions(email, password_reset_url)
+    @password_reset_url = password_reset_url
+    mail(to: email, subject: '[Memoit] Password reset instructions')
   end
 end

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authtenticate_user!, except: [:create]
+  before_action :authtenticate_user!, except: [:create]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params.merge(provider: 'email'))
     if @user.save
       sign_in(@user)
-      render :show, status: :created, location: @user
+      render_user(@user, :created)
     else
       render json: { errors_fields: @user.errors, errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
