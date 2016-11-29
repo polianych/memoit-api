@@ -14,8 +14,10 @@ class User < ApplicationRecord
 
   before_validation         :set_uid, on: :create
 
-  has_many :user_tokens
-  has_one  :password_reset
+  has_many  :user_tokens,           dependent: :destroy
+  has_one   :password_reset,        dependent: :destroy
+  has_many  :posts, as: :publisher, dependent: :destroy
+  has_many  :subscriptions,         dependent: :destroy
 
   def set_uid
     self.uid = email if provider == 'email'

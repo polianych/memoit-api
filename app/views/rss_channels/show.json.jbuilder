@@ -1,0 +1,1 @@
+json.partial! "rss_channels/rss_channel", rss_channel: @rss_channel
