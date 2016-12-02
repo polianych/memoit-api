@@ -15,13 +15,30 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'show current user' do
-    @user = users(:one)
     @user_token = UserToken.create(user_id: @user.id)
     get user_url(id: 'me'), headers: { 'Authorization' => @user_token.token, 'Client' => @user_token.client }, as: :json
     body = JSON.parse(response.body)
     assert_equal body['user']['id'], @user.id
     assert_equal body['user']['email'], @user.email
     assert_response 200
+  end
+
+  test 'show user by nickname as params[:id]' do
+    get user_url(id: @user.nickname), as: :json
+    body = JSON.parse(response.body)
+    assert_equal body['user']['id'], @user.id
+    assert_equal body['user']['email'], @user.email
+    assert_response 200
+  end
+
+  test 'show not found when no user with such nickname' do
+    get user_url(id: 'not_found'), as: :json
+    assert_response 404
+  end
+
+  test 'show forbidden when try get current user without valid authorization headers' do
+    get user_url(id: 'me'), as: :json
+    assert_response 401
   end
 
 end

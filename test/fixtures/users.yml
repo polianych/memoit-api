@@ -7,3 +7,11 @@ one:
   uid: test@test.com
   provider: email
   password_digest: <%= ::BCrypt::Password.create('password') %>
+
+two:
+  nickname: test_nickname_two
+  name: test_name_two
+  email: test_two@test.com
+  uid: test_two@test.com
+  provider: email
+  password_digest: <%= ::BCrypt::Password.create('password') %>

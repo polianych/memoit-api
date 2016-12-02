@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authtenticate_user!, except: [:create]
+  before_action :authtenticate_user!, except: [:create, :show]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
@@ -11,6 +11,9 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if !@user
+      head :not_found
+    end
   end
 
   # POST /users
@@ -44,7 +47,12 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = params[:id] == 'me' ? current_user : User.find(params[:id])
+      @user = if params[:id] == 'me'
+        authtenticate_user!
+        current_user
+      else
+        User.find_by(nickname: params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
