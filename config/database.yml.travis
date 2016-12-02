@@ -1,0 +1,3 @@
+test:
+  adapter: postgresql
+  database: memoit_test_travis
