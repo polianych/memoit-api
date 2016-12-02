@@ -9,4 +9,5 @@ script:
 before_script:
   - cp config/database.yml.travis config/database.yml
   - psql -c 'create database memoit_test_travis;' -U postgres
-bundler_args: --binstubs=./bundler_stubs
+bundler_args:
+  --without production development
