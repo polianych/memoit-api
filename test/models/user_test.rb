@@ -3,7 +3,7 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   test 'not valid nicknames' do
     user = users(:one)
-    not_valid_nicknames = [42, "nickname!", "nickname with spaces", "кирилица", "nickname%", "nickname&", "nickname#", "nickname@"]
+    not_valid_nicknames = [42, "nickname!", "nickname with spaces", "кирилица", "nickname%", "nickname&", "nickname#", "nickname@", "me"]
     not_valid_nicknames.each do |n|
       user.update_attributes(nickname: n)
       assert_not user.valid?
