@@ -15,6 +15,7 @@ class User < ApplicationRecord
   validates_presence_of     :password_confirmation, if: lambda { |m| m.provider == 'email' && m.password.present? }
 
   before_validation         :set_uid, on: :create
+  after_create              :create_self_subscription
   has_many  :user_tokens,           dependent: :destroy
   has_one   :password_reset,        dependent: :destroy
   has_many  :posts, as: :publisher, dependent: :destroy
@@ -22,6 +23,10 @@ class User < ApplicationRecord
 
   def set_uid
     self.uid = email if provider == 'email'
+  end
+
+  def create_self_subscription
+    Subscription.create(publisher: self, user: self)
   end
 
   def self.authtenticate_by_token(client, token)

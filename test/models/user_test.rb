@@ -26,4 +26,11 @@ class UserTest < ActiveSupport::TestCase
     user1.update_attributes(nickname: user2.nickname)
     assert_not user1.valid?
   end
+
+  test 'self-subscription' do
+    user = User.create(nickname: 'self_subscription', email: 'self_subscription@email.com', provider: 'email', password: '123456', password_confirmation: '123456')
+    assert user.subscriptions.count == 1
+    assert user.subscriptions.first.user == user
+    assert user.subscriptions.first.publisher == user
+  end
 end
