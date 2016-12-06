@@ -19,7 +19,7 @@ gem 'spring-watcher-listen', '~> 2.0.0'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 gem 'kaminari'
-gem 'sidekiq', group: [:development, :production]
+gem 'sidekiq'
 gem 'httparty', group: [:development, :production]
 gem 'feedjira', group: [:development, :production]
 gem 'whenever', require: false
