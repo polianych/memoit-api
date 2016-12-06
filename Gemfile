@@ -12,13 +12,17 @@ gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'listen', '~> 3.0.5'
+# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+gem 'spring'
+gem 'spring-watcher-listen', '~> 2.0.0'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
-gem 'httparty'
-gem 'sidekiq'
-gem 'feedjira'
-gem 'whenever', require: false
 gem 'kaminari'
+gem 'sidekiq', group: [:development, :production]
+gem 'httparty', group: [:development, :production]
+gem 'feedjira', group: [:development, :production]
+gem 'whenever', require: false
 gem 'byebug', platform: :mri, group: [:development, :test]
 
 group :production do
@@ -26,10 +30,8 @@ group :production do
     gem 'puma', '~> 3.0'
 end
 
-# Use Capistrano for deployment
-gem 'capistrano-rails', group: :development
-gem 'letter_opener'
-gem 'listen', '~> 3.0.5'
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring'
-gem 'spring-watcher-listen', '~> 2.0.0'
+group :development do
+  # Use Capistrano for deployment
+  gem 'capistrano-rails'
+  gem 'letter_opener'
+end
