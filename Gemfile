@@ -26,12 +26,10 @@ group :production do
     gem 'puma', '~> 3.0'
 end
 
-group :development do
-  # Use Capistrano for deployment
-  gem 'capistrano-rails', group: :development
-  gem 'letter_opener'
-  gem 'listen', '~> 3.0.5'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-end
+# Use Capistrano for deployment
+gem 'capistrano-rails', group: :development
+gem 'letter_opener'
+gem 'listen', '~> 3.0.5'
+# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+gem 'spring'
+gem 'spring-watcher-listen', '~> 2.0.0'
