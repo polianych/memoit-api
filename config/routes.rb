@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   scope '/api' do
     resources :users
     resources :password_resets
-    resources :rss_channels
+    resources :rss_channels, only: [:index, :show]
+    resources :rss_categories, only: [:index, :show]
     resources :posts
     post   'sign_in',  to: 'sessions#create'
     delete 'sign_out', to: 'sessions#destroy'

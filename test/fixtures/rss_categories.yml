@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+rss_category_one:
   title: rss_category_one
 
-two:
+rss_category_two:
   title: rss_category_two

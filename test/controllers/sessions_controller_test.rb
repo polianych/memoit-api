@@ -7,9 +7,9 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('UserToken.count') do
       post sign_in_url, params: { user: { email: 'test@test.com', password: 'password' } }, as: :json
     end
+    assert_response 201
     assert_includes(response.headers.keys, "Authorization")
     assert_includes(response.headers.keys, "Client")
-    assert_response 201
   end
 
   test 'should sign out user' do

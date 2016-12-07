@@ -10,11 +10,11 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
           password_reset_url: 'http://memoit.local/signin/password-resets/%{id}?password_reset_token=%{password_reset_token}' }
       end
       email = ActionMailer::Base.deliveries.last
+      assert_response 201
       assert_includes email.to, @user.email
       assert_includes email.from, 'no-reply@memoit.net'
       assert_equal '[Memoit] Password reset instructions', email.subject
       assert_match("http://memoit.local/signin/password-resets/#{PasswordReset.last.uri}?password_reset_token=", email.html_part.body.to_s)
-      assert_response 201
     end
   end
 
@@ -41,8 +41,8 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
                                         password: '123456',
                                         password_confirmation: 'not_match'
                                       } }
-    assert_response 422
     body = JSON.parse(response.body)
+    assert_response 422
     assert_includes body['errors_fields']['password_confirmation'], "doesn't match password"
   end
 
@@ -55,8 +55,8 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
                                         password: '123456',
                                         password_confirmation: '123456'
                                       } }
-    assert_response 422
     body = JSON.parse(response.body)
+    assert_response 422
     assert_includes body['errors'], 'Token expired or invalid.'
   end
 

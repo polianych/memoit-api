@@ -2,8 +2,7 @@ class RssChannelsController < ApplicationController
   before_action :set_rss_channel, only: [:show]
 
   def index
-    @rss_channels = RssChannel.all
-    @rss_categories = RssCategory.all
+    @rss_channels = RssChannel.where(rss_category_id: params.require(:rss_category_id)).page(params.fetch(:page, 1)).per(10)
   end
 
   def show

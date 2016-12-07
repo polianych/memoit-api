@@ -20,8 +20,8 @@ gem 'spring-watcher-listen', '~> 2.0.0'
 gem 'rack-cors'
 gem 'kaminari'
 gem 'sidekiq'
-gem 'httparty', group: [:development, :production]
-gem 'feedjira', group: [:development, :production]
+gem 'httparty'
+gem 'feedjira'
 gem 'whenever', require: false
 gem 'byebug', platform: :mri, group: [:development, :test]
 
