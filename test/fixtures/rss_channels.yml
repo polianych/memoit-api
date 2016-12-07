@@ -1,17 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+rss_channel_one:
   title: rss_channel_test_1
   slug: rss_channnel_1
   description: rss_channel_test_1_description
   url: http://rss_channel_test_1.com
   image_url: http://rss_channel_test_1.com/image.jpg
-  rss_category_id: 1
+  rss_category: rss_category_one
 
-two:
+rss_channel_two:
   title: rss_channel_test_2
   slug: rss_channnel_2
   description: rss_channel_test_2_description
   url: http://rss_channel_test_2.com
   image_url: http://rss_channel_test_2.com/image.jpg
-  rss_category_id: 2
+  rss_category: rss_category_two
