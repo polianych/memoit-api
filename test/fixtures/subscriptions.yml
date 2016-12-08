@@ -1,11 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user: one
-  publisher: one
-  publisher_type: Publisher
+subscription_one:
+  user: user_one
+  publisher: rss_channel_one (RssChannel)
 
-two:
-  user: two
-  publisher: two
-  publisher_type: Publisher
+subscription_two:
+  user: user_one
+  publisher: user_one (User)
+
+subscription_three:
+  user: user_one
+  publisher: user_two (User)
+
+subscription_four:
+  user: user_two
+  publisher: user_two (User)

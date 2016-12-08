@@ -4,7 +4,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create password reset and send email' do
     perform_enqueued_jobs do
-      @user = users(:one)
+      @user = users(:user_one)
       assert_difference ['PasswordReset.count', 'ActionMailer::Base.deliveries.size'] do
         post password_resets_url, params: { email: @user.email,
           password_reset_url: 'http://memoit.local/signin/password-resets/%{id}?password_reset_token=%{password_reset_token}' }
@@ -19,7 +19,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should successfully update user password' do
-    @user = users(:one)
+    @user = users(:user_one)
     @password_reset = PasswordReset.create(user: @user)
     assert_difference 'PasswordReset.count', -1 do
       put password_reset_url(id: @password_reset.uri), params: {
@@ -33,7 +33,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'show errors when password and password confirmation do not match' do
-    @user = users(:one)
+    @user = users(:user_one)
     @password_reset = PasswordReset.create(user: @user)
     put password_reset_url(id: @password_reset.uri), params: {
                                         password_reset_token: @password_reset.token,
@@ -47,7 +47,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'show errors invalid token' do
-    @user = users(:one)
+    @user = users(:user_one)
     @password_reset = PasswordReset.create(user: @user)
     put password_reset_url(id: @password_reset.uri), params: {
                                         password_reset_token: 'invalid_token',

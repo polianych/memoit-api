@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   scope '/api' do
-    resources :users
+    resources :users, only: [:create, :show, :update]
     resources :password_resets
+    resources :subscriptions, only: [:index, :create, :destroy]
     resources :rss_channels, only: [:index, :show]
     resources :rss_categories, only: [:index, :show]
     resources :posts

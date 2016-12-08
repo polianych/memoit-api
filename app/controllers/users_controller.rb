@@ -2,12 +2,6 @@ class UsersController < ApplicationController
   before_action :authtenticate_user!, except: [:create, :show]
   before_action :set_user, only: [:show, :update, :destroy]
 
-  # GET /users
-  # GET /users.json
-    @users = User.all
-    def index
-  end
-
   # GET /users/1
   # GET /users/1.json
   def show
@@ -38,11 +32,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
