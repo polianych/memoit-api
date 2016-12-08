@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class RssCategoriesControllerTest < ActionDispatch::IntegrationTest
-  setup do
-  end
 
   test 'get all RssCategories' do
     get rss_categories_url, as: :json
