@@ -15,3 +15,11 @@ rss_channel_two:
   url: http://rss_channel_test_2.com
   image_url: http://rss_channel_test_2.com/image.jpg
   rss_category: rss_category_two
+
+rss_channel_three:
+  title: rss_channel_test_3
+  slug: rss_channnel_3
+  description: rss_channel_test_3_description
+  url: http://rss_channel_test_3.com
+  image_url: http://rss_channel_test_3.com/image.jpg
+  rss_category: rss_category_one
