@@ -1,4 +1,4 @@
-json.extract! subscription, :id, :created_at, :user_id, :publisher_type
+json.extract! subscription, :id, :created_at, :user_id, :publisher_type, :publisher_id
 case subscription.publisher_type
 when 'RssChannel'
   json.publisher do

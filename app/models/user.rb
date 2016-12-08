@@ -29,6 +29,10 @@ class User < ApplicationRecord
     Subscription.create(publisher: self, user: self)
   end
 
+  def get_subscription_ids(publisher_type, publisher_ids)
+    subscriptions.where(publisher_type: publisher_type, publisher_id: publisher_ids).pluck_to_hash(['id', 'publisher_id'])
+  end
+
   def self.authtenticate_by_token(client, token)
     user_token = UserToken.find_by(client: client)
     return false unless user_token
