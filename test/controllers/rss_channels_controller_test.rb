@@ -7,7 +7,8 @@ class RssChannelsControllerTest < ActionDispatch::IntegrationTest
     get rss_channels_url + "?rss_category_id=#{@rss_category.id}", as: :json
     body = JSON.parse(response.body)
     assert_response 200
-    body.assert_valid_keys('rss_channels')
+    body.assert_valid_keys('rss_channels', 'meta')
+    body['meta'].assert_valid_keys('total_pages', 'current_page')
     assert_equal body['rss_channels'].count, 1
   end
 
