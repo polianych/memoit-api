@@ -1,17 +1,37 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  content: MyText
-  postable: one
-  postable_type: Postable
-  publisher: one
-  publisher_type: Publisher
+post_one:
+  title: post_one_title
+  content: post_one_content
+  publisher: user_one (User)
+  postable: user_post_one (UserPost)
 
-two:
-  title: MyString
-  content: MyText
-  postable: two
-  postable_type: Postable
-  publisher: two
-  publisher_type: Publisher
+post_two:
+  title: post_two_title
+  content: post_two_content
+  publisher: user_two (User)
+  postable: user_post_two (UserPost)
+
+post_three:
+  title: post_three_title
+  content: post_three_content
+  publisher: user_two (User)
+  postable: user_post_three (UserPost)
+
+post_four:
+  title: post_four_title
+  content: post_four_content
+  publisher: rss_channel_one (RssChannel)
+  postable: rss_post_one (RssPost)
+
+post_five:
+  title: post_five_title
+  content: post_five_content
+  publisher: rss_channel_two (RssChannel)
+  postable: rss_post_two (RssPost)
+
+post_six:
+  title: post_six_title
+  content: post_six_content
+  publisher: rss_channel_two (RssChannel)
+  postable: rss_post_three (RssPost)

@@ -18,12 +18,17 @@ class RssChannel < ApplicationRecord
           publisher: self,
           published_at: item.published
         },
+        raw_content: item.summary,
         guid: item.entry_id,
         link: item.url,
         media_thumbnail: item.image
       })
     end
+    update_attributes(imported_at: DateTime.now, import_error: nil)
     new_rss_posts
+  rescue Exception => e
+    update_attributes(imported_at: DateTime.now, import_error: e)
+    []
   end
 
   def self.save_by_url(url, rss_category, slug)

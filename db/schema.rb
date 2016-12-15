@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206130202) do
+ActiveRecord::Schema.define(version: 20161213101512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(version: 20161206130202) do
     t.datetime "updated_at", null: false
     t.index ["uri"], name: "index_password_resets_on_uri", unique: true, using: :btree
     t.index ["user_id"], name: "index_password_resets_on_user_id", using: :btree
+  end
+
+  create_table "post_video_sources", force: :cascade do |t|
+    t.integer  "post_id"
+    t.string   "source_url"
+    t.string   "mime_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_video_sources_on_post_id", using: :btree
   end
 
   create_table "posts", force: :cascade do |t|
@@ -55,6 +64,8 @@ ActiveRecord::Schema.define(version: 20161206130202) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "slug"
+    t.text     "import_error"
+    t.datetime "imported_at"
     t.index ["rss_category_id"], name: "index_rss_channels_on_rss_category_id", using: :btree
   end
 
@@ -64,6 +75,7 @@ ActiveRecord::Schema.define(version: 20161206130202) do
     t.string   "guid"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.text     "raw_content"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -106,6 +118,7 @@ ActiveRecord::Schema.define(version: 20161206130202) do
   end
 
   add_foreign_key "password_resets", "users"
+  add_foreign_key "post_video_sources", "posts"
   add_foreign_key "rss_channels", "rss_categories"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "user_tokens", "users"

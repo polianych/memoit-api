@@ -1,11 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  link: MyString
-  image_url: MyString
-  video_url: MyString
+user_post_one:
+  link: user_post_one_link
+  image_url: user_post_one_image
+  video_url: user_post_one_video
 
-two:
-  link: MyString
-  image_url: MyString
-  video_url: MyString
+user_post_two:
+  link: user_post_two_link
+  image_url: user_post_two_image
+  video_url: user_post_two_video
+
+user_post_three:
+  link: user_post_three_link
+  image_url: user_post_three_image
+  video_url: user_post_three_video
