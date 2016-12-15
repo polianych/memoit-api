@@ -7,7 +7,7 @@ class PostsController < ApplicationController
     if params[:publisher_type] && params[:publisher_id]
       @posts = Post.where(publisher_type: params[:publisher_type], publisher_id: params[:publisher_id])
     elsif user_signed_in?
-      @posts = Post.for_user(current_user)
+      @posts = params[:publisher_type] ? Post.for_user(current_user).where(publisher_type: params[:publisher_type]) : Post.for_user(current_user)
     else
       @posts = Post.all
     end

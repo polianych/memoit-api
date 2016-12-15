@@ -3,6 +3,10 @@ json.posts @posts do |post|
     json.partial! "posts/post", post: post
   end
 
+  json.video_sources do
+    json.array! post.video_sources, partial: 'posts/video_source', as: :video_source
+  end
+
   case post.publisher_type
   when 'RssChannel'
     json.rss_channel do

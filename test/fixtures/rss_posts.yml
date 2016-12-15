@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  link: MyString
-  media_thumbnail: MyString
+rss_post_one:
+  link: rss_post_one_link
+  media_thumbnail: rss_post_thumbnail_one
 
-two:
-  link: MyString
-  media_thumbnail: MyString
+rss_post_two:
+  link: rss_post_two_link
+  media_thumbnail: rss_post_thumbnail_two
+
+rss_post_three:
+  link: rss_post_three_link
+  media_thumbnail: rss_post_thumbnail_three

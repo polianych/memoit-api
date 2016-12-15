@@ -22,8 +22,11 @@ gem 'kaminari'
 gem 'sidekiq'
 gem 'httparty'
 gem 'feedjira'
+gem 'nokogiri'
 gem 'whenever', require: false
 gem 'byebug', platform: :mri, group: [:development, :test]
+gem 'minitest-around', group: :test
+gem 'database_cleaner', group: :test
 
 group :production do
     # Use Puma as the app server
