@@ -12,6 +12,7 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     body = JSON.parse(response.body)
     assert_response 200
     body.assert_valid_keys('subscriptions', 'meta')
+    body['subscriptions'].first.assert_valid_keys('id', 'created_at', 'user_id' ,'publisher_type', 'publisher_id', 'user_subscription_id', 'publisher_title', 'subscribed')
     assert_equal 3, body['subscriptions'].count
     assert_equal @user.id, body['subscriptions'].first['user_id']
   end

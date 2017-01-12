@@ -1,11 +1,2 @@
-json.extract! subscription, :id, :created_at, :user_id, :publisher_type, :publisher_id
-case subscription.publisher_type
-when 'RssChannel'
-  json.publisher do
-    json.partial! "rss_channels/rss_channel_short", rss_channel: subscription.publisher_rss_channel
-  end
-when 'User'
-  json.publisher do
-    json.partial! "users/user_short", user: subscription.publisher_user
-  end
-end
+json.extract! subscription, :id, :created_at, :user_id, :publisher_type, :publisher_id, :user_subscription_id, :publisher_title
+json.subscribed !!subscription.user_subscription_id

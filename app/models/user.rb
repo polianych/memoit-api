@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include JoinUserSubscription
+
   has_secure_password       validations: false
 
   validates_presence_of     :uid, :provider, :nickname
@@ -27,10 +29,6 @@ class User < ApplicationRecord
 
   def create_self_subscription
     Subscription.create(publisher: self, user: self)
-  end
-
-  def get_subscription_ids(publisher_type, publisher_ids)
-    subscriptions.where(publisher_type: publisher_type, publisher_id: publisher_ids).pluck_to_hash(['id', 'publisher_id'])
   end
 
   def self.authtenticate_by_token(client, token)

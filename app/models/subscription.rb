@@ -2,11 +2,23 @@ class Subscription < ApplicationRecord
   belongs_to :user
   belongs_to :publisher, polymorphic: true
   validates_presence_of :user, :publisher_type, :publisher_id
-  belongs_to :publisher_rss_channel, class_name: 'RssChannel', foreign_key: 'publisher_id', optional: true
-  belongs_to :publisher_user, class_name: 'User', foreign_key: 'publisher_id', optional: true
-  scope :with_meta_data, -> { eager_load(:publisher_rss_channel, :publisher_user).order(created_at: :asc) }
 
   def self.pluck_to_hash(keys)
     pluck(*keys).map{|pa| Hash[keys.zip(pa)]}
+  end
+
+  def self.with_user_subscriptions(where_condition, user)
+    user_id = user ? user.id : 'NULL'
+    select("subscriptions.*, sb.id as user_subscription_id").with_publisher_data.where(where_condition).joins(
+      "LEFT JOIN subscriptions as sb ON sb.publisher_id = subscriptions.publisher_id AND sb.publisher_type = subscriptions.publisher_type AND sb.user_id = #{user_id}"
+    )
+  end
+
+  def self.with_publisher_data
+    joins = [
+      "LEFT JOIN rss_channels as rc ON subscriptions.publisher_id = rc.id AND subscriptions.publisher_type = 'RssChannel'",
+      "LEFT JOIN users as u ON subscriptions.publisher_id = u.id AND subscriptions.publisher_type = 'User'"
+    ]
+    select("CASE subscriptions.publisher_type WHEN 'RssChannel' THEN rc.title WHEN 'User' THEN u.nickname END as publisher_title").joins(joins.join(" "))
   end
 end

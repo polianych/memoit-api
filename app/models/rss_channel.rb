@@ -1,6 +1,9 @@
 class RssChannel < ApplicationRecord
+  include JoinUserSubscription
+
   belongs_to :rss_category
   has_many :posts, as: :publisher, dependent: :destroy, autosave: true
+  has_many :subscriptions, as: :publisher
   validates_presence_of   :rss_category, :url, :title, :slug
   validates_format_of     :slug, :with => /\A[a-zA-Z][\w\d]*\z/, message: "only letters, numbers and undersoce"
   validates_uniqueness_of :url, :slug
