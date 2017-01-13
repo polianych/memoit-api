@@ -19,6 +19,11 @@ class Subscription < ApplicationRecord
       "LEFT JOIN rss_channels as rc ON subscriptions.publisher_id = rc.id AND subscriptions.publisher_type = 'RssChannel'",
       "LEFT JOIN users as u ON subscriptions.publisher_id = u.id AND subscriptions.publisher_type = 'User'"
     ]
-    select("CASE subscriptions.publisher_type WHEN 'RssChannel' THEN rc.title WHEN 'User' THEN u.nickname END as publisher_title").joins(joins.join(" "))
+    selects = [
+      "CASE subscriptions.publisher_type WHEN 'RssChannel' THEN rc.title WHEN 'User' THEN u.nickname END as publisher_title",
+      "CASE subscriptions.publisher_type WHEN 'RssChannel' THEN rc.slug  WHEN 'User' THEN u.nickname END as publisher_slug",
+
+    ]
+    select(selects.join(", ")).joins(joins.join(" "))
   end
 end
