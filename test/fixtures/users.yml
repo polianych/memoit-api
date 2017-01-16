@@ -15,3 +15,11 @@ user_two:
   uid: test_two@test.com
   provider: email
   password_digest: <%= ::BCrypt::Password.create('password') %>
+
+user_three:
+  nickname: test_nickname_search_three
+  name: test_name_search_three
+  email: test_search_three@test.com
+  uid: test_search_three@test.com
+  provider: email
+  password_digest: <%= ::BCrypt::Password.create('password') %>

@@ -3,13 +3,13 @@ class SubscriptionsController < ApplicationController
 
   def index
     user_id = params[:user_id] ? params[:user_id] : current_user.try(:id)
-    @subscriptions = Subscription.with_user_subscriptions( { user_id: user_id.to_i }, current_user).page(params.fetch(:page, 1)).per(10)
+    @subscriptions = Subscription.with_user_subscriptions( current_user, { user_id: user_id.to_i } ).page(params.fetch(:page, 1)).per(10)
   end
 
   def create
     @subscription = Subscription.new(subscription_params)
     if @subscription.save
-      @subscription = Subscription.with_user_subscriptions( { id: @subscription.id }, current_user).first
+      @subscription = Subscription.with_user_subscriptions( current_user, { id: @subscription.id } ).first
       render :show, status: :created
     else
       render json: { errors_fields: @subscription.errors, errors: @subscription.errors.full_messages }, status: :unprocessable_entity

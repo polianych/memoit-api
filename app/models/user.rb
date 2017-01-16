@@ -36,4 +36,9 @@ class User < ApplicationRecord
     return false unless user_token
     user_token.valid_token?(token) ? user_token.user : nil
   end
+
+  def self.search(query)
+    query = query.downcase
+    where("nickname ILIKE ?", "%#{query}%").or(where("name ILIKE ?", "%#{query}%"))
+  end
 end
