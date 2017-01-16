@@ -5,6 +5,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user = users(:user_one)
   end
 
+  test 'search users by query' do
+    @user_token = UserToken.create(user_id: @user.id)
+    get users_url + "?search_query=search", headers: { 'Authorization' => @user_token.token, 'Client' => @user_token.client }, as: :json
+    body = JSON.parse(response.body)
+    body.assert_valid_keys("users", "meta")
+    body['meta'].assert_valid_keys("current_page", "total_pages")
+    body['users'].first.assert_valid_keys("id", "nickname", "name", "email", "uid", "provider", "created_at", "updated_at", "subscribed", "user_subscription_id")
+    assert_equal body['users'].count, 1
+    assert_response 200
+  end
+
   test 'should create user' do
     assert_difference('User.count') do
       post users_url, params: { user: { email: 'test2@test.com', nickname: 'test2', password: '123456', password_confirmation: '123456' } }, as: :json
@@ -37,7 +48,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'show forbidden when try get current user without valid authorization headers' do
-    get user_url(id: 'me'), as: :json
+    get user_url(id: 'me'), headers: { 'Authorization' => 'not_valid_token', 'Client' => 'not_valid_client' }, as: :json
     assert_response 401
   end
 

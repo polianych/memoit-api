@@ -2,6 +2,11 @@ class UsersController < ApplicationController
   before_action :authtenticate_user!, except: [:create, :show]
   before_action :set_user, only: [:show, :update, :destroy]
 
+  def index
+    @users = User.with_user_subscriptions(current_user).page(params.fetch(:page, 1)).per(5)
+    @users = @users.search(params[:search_query]) if params[:search_query]
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show

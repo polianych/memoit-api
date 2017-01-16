@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213101512) do
+ActiveRecord::Schema.define(version: 20170113153053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_trgm"
+  enable_extension "btree_gin"
 
   create_table "password_resets", force: :cascade do |t|
     t.string   "uri"
@@ -115,6 +117,8 @@ ActiveRecord::Schema.define(version: 20161213101512) do
     t.string   "provider"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index "name gin_trgm_ops", name: "index_users_on_name_gin_trgm_ops", using: :gin
+    t.index "nickname gin_trgm_ops", name: "index_users_on_nickname_gin_trgm_ops", using: :gin
   end
 
   add_foreign_key "password_resets", "users"
