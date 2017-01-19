@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113153053) do
+ActiveRecord::Schema.define(version: 20170119115023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,9 @@ ActiveRecord::Schema.define(version: 20170113153053) do
     t.integer  "publisher_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.index ["publisher_id", "publisher_type", "user_id"], name: "index_subscriptions_on_publisher_and_user", using: :btree
+    t.index ["publisher_id", "publisher_type"], name: "index_subscriptions_on_publisher_id_and_publisher_type", using: :btree
+    t.index ["publisher_id"], name: "index_subscriptions_on_publisher_id", using: :btree
     t.index ["publisher_type", "publisher_id"], name: "index_subscriptions_on_publisher_type_and_publisher_id", using: :btree
     t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
   end

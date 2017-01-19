@@ -27,6 +27,7 @@ gem 'whenever', require: false
 gem 'byebug', platform: :mri, group: [:development, :test]
 gem 'minitest-around', group: :test
 gem 'database_cleaner', group: :test
+gem 'settingslogic'
 
 group :production do
     # Use Puma as the app server

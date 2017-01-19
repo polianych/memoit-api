@@ -3,7 +3,7 @@ class RssCategoriesController < ApplicationController
   before_action :set_rss_category, only: [:show]
 
   def index
-    @rss_categories = RssCategory.all.page(1)
+    @rss_categories = RssCategory.all.page(1).per(Settings.max_per_page)
   end
 
   def show

@@ -3,8 +3,11 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
   def index
-    @users = User.with_user_subscriptions(current_user).page(params.fetch(:page, 1)).per(5)
-    @users = @users.search(params[:search_query]) if params[:search_query]
+    @users = params[:search_query] ? User.search(params[:search_query]) : User.all
+    @users = @users.page(params.fetch(:page, 1))
+                   .per(params.fetch(:per_page, Settings.default_per_page))
+                   .order(created_at: :asc)
+                   .with_user_subscriptions(current_user)
   end
 
   # GET /users/1

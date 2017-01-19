@@ -1,0 +1,11 @@
+defaults: &defaults
+  default_per_page: 20
+  max_per_page: 100
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

@@ -11,7 +11,9 @@ class PostsController < ApplicationController
     else
       @posts = Post.all
     end
-    @posts = @posts.with_meta_data.page(params.fetch(:page, 1)).per(10)
+    @posts = @posts.with_meta_data
+                   .page(params.fetch(:page, 1))
+                   .per(params.fetch(:per_page, Settings.default_per_page))
   end
 
   def show

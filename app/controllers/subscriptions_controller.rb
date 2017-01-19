@@ -3,7 +3,9 @@ class SubscriptionsController < ApplicationController
 
   def index
     user_id = params[:user_id] ? params[:user_id] : current_user.try(:id)
-    @subscriptions = Subscription.with_user_subscriptions( current_user, { user_id: user_id.to_i } ).page(params.fetch(:page, 1)).per(10)
+    @subscriptions = Subscription.with_user_subscriptions( current_user, { user_id: user_id.to_i } )
+                                 .page(params.fetch(:page, 1))
+                                 .per(params.fetch(:per_page, Settings.default_per_page))
   end
 
   def create
