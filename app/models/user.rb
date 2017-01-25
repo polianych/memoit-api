@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   include JoinUserSubscription
 
+  attr_accessor             :current_password, :validate_password
+  alias                     :validate_password? :validate_password
   has_secure_password       validations: false
 
   validates_presence_of     :uid, :provider, :nickname
@@ -13,8 +15,11 @@ class User < ApplicationRecord
   validates                 :nickname, exclusion: { in: %w(me), message: "%{value} is reserved" }
   validates_length_of       :password, :minimum => 6, if: lambda { |m| m.provider == 'email' && m.password.present? }
   validates_presence_of     :password, :on => :create, if: lambda { |m| m.provider == 'email' }
+  validates_presence_of     :password, :on => :update, if: :validate_password?
   validates_confirmation_of :password, if: lambda { |m| m.provider == 'email' && m.password.present? }, :message => Proc.new { |error, attributes| "doesn't match password" }
   validates_presence_of     :password_confirmation, if: lambda { |m| m.provider == 'email' && m.password.present? }
+  validate                  :current_password_is_correct, if: :validate_password?, on: :update
+  validates_presence_of     :current_password, if: :validate_password?, on: :update
 
   before_validation         :set_uid, on: :create
   after_create              :create_self_subscription
@@ -22,6 +27,13 @@ class User < ApplicationRecord
   has_one   :password_reset,        dependent: :destroy
   has_many  :posts, as: :publisher, dependent: :destroy
   has_many  :subscriptions,         dependent: :destroy
+
+
+  def current_password_is_correct
+    if User.find(id).authenticate(current_password) == false
+      errors.add(:current_password, "is incorrect.")
+    end
+  end
 
   def set_uid
     self.uid = email if provider == 'email'
