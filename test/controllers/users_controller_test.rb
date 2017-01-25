@@ -25,6 +25,39 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.headers.keys, 'Client'
   end
 
+  test 'should update current_user' do
+    @user_token = UserToken.create(user_id: @user.id)
+    put user_url(id: 'me'),
+        params: { user: { nickname: 'update_nickname', name: 'update_name' } },
+        headers: { 'Authorization' => @user_token.token, 'Client' => @user_token.client }, as: :json
+    assert_response 200
+    body = JSON.parse(response.body)
+    @user.reload
+    assert_equal @user.nickname, 'update_nickname'
+    assert_equal @user.name, 'update_name'
+    assert_equal body['user']['nickname'], 'update_nickname'
+    assert_equal body['user']['name'], 'update_name'
+  end
+
+  test 'should update current_user password' do
+    @user_token = UserToken.create(user_id: @user.id)
+    put user_url(id: 'me'),
+        params: { user: { current_password: 'password', password: 'new_password', password_confirmation: 'new_password' } },
+        headers: { 'Authorization' => @user_token.token, 'Client' => @user_token.client }, as: :json
+    assert_response 200
+    body = JSON.parse(response.body)
+    @user.reload
+    assert @user.authenticate('new_password')
+  end
+
+  test 'show error while update current_user password with invalid current_password' do
+    @user_token = UserToken.create(user_id: @user.id)
+    put user_url(id: 'me'),
+        params: { user: { current_password: 'invalid_password', password: 'new_password', password_confirmation: 'new_password' } },
+        headers: { 'Authorization' => @user_token.token, 'Client' => @user_token.client }, as: :json
+    assert_response 422
+  end
+
   test 'show current user' do
     @user_token = UserToken.create(user_id: @user.id)
     get user_url(id: 'me'), headers: { 'Authorization' => @user_token.token, 'Client' => @user_token.client }, as: :json

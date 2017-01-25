@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authtenticate_user!, except: [:create, :show]
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :authtenticate_user!, except: [:index, :create, :show]
+  before_action :set_user, only: [:show]
 
   def index
     @users = params[:search_query] ? User.search(params[:search_query]) : User.all
@@ -33,7 +33,9 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    if @user.update(user_params)
+    @user = current_user
+    @user.validate_password = true if user_edit_params.keys.include? "password"
+    if @user.update(user_edit_params)
       render :show, status: :ok, location: @user
     else
       render json: { errors_fields: @user.errors, errors: @user.errors.full_messages }, status: :unprocessable_entity
@@ -55,5 +57,9 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :nickname, :password, :password_confirmation)
+    end
+
+    def user_edit_params
+      params.require(:user).permit(:nickname, :name, :current_password, :password, :password_confirmation)
     end
 end
